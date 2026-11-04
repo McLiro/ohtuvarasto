@@ -1,5 +1,6 @@
 from varasto import Varasto
 
+#liian pitkä kommentti, jota pylint ei sallisi, mutta kirjoitankin sen kuitenkin että voin testata, pylintin toimintaa githubissa.
 
 def tulosta_luodut_varastot(mehua, olutta):
     print("Luonnin jälkeen:")

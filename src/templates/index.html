@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Warehouse</title>
+  </head>
+  <body>
+    <h1>Warehouse</h1>
+    {% if error %}
+      <p>{{ error }}</p>
+    {% endif %}
+    <h2>Create a storage</h2>
+    <form action="{{ url_for('warehouse.create_storage') }}" method="post">
+      <label for="name">Name</label>
+      <input id="name" name="name" required>
+      <label for="size">Size</label>
+      <input id="size" name="size" type="number" min="0" step="any" required>
+      <button type="submit">Create</button>
+    </form>
+    <h2>Storages</h2>
+    {% for name, storage in storages.items() %}
+      <section>
+        <h3>{{ name }}</h3>
+        <p>Size: {{ storage.tilavuus }}</p>
+        <p>Balance: {{ storage.saldo }}</p>
+        <form action="{{ url_for('warehouse.add_item', name=name) }}" method="post">
+          <label for="add-{{ loop.index }}">Amount to add</label>
+          <input id="add-{{ loop.index }}" name="amount" type="number" min="0" step="any" required>
+          <button type="submit">Add</button>
+        </form>
+        <form action="{{ url_for('warehouse.remove_item', name=name) }}" method="post">
+          <label for="remove-{{ loop.index }}">Amount to remove</label>
+          <input id="remove-{{ loop.index }}" name="amount" type="number" min="0" step="any" required>
+          <button type="submit">Remove</button>
+        </form>
+      </section>
+    {% endfor %}
+  </body>
+</html>

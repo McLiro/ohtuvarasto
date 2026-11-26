@@ -33,6 +33,9 @@
           <input id="remove-{{ loop.index }}" name="amount" type="number" min="0" step="any" required>
           <button type="submit">Remove</button>
         </form>
+        <form action="{{ url_for('warehouse.delete_storage', name=name) }}" method="post">
+          <button type="submit">Delete storage</button>
+        </form>
       </section>
     {% endfor %}
   </body>

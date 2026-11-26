@@ -50,3 +50,17 @@ def test_invalid_storage_is_rejected():
     assert response.status_code == 400
     response = client.post("/storages", data={"name": " ", "size": "10"})
     assert response.status_code == 400
+
+
+def test_storage_can_be_deleted():
+    client = create_app().test_client()
+    client.post("/storages", data={"name": "Apples", "size": "10"})
+    client.post("/storages", data={"name": "Oranges", "size": "5"})
+
+    response = client.post("/storages/Apples/delete")
+
+    assert response.status_code == 302
+    response = client.get("/")
+    assert b"Apples" not in response.data
+    assert b"Oranges" in response.data
+    assert client.post("/storages/Missing/delete").status_code == 404

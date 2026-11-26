@@ -79,6 +79,15 @@ def remove_item(name):
     return _change_balance(name, request.form.get("amount"), add=False)
 
 
+@warehouse.post("/storages/<path:name>/delete")
+def delete_storage(name):
+    storages = current_app.extensions["storages"]
+    if name not in storages:
+        abort(404)
+    del storages[name]
+    return redirect(url_for("warehouse.index"))
+
+
 def create_app():
     application = Flask(__name__)
     application.extensions["storages"] = {}
